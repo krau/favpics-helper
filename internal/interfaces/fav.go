@@ -1,5 +1,7 @@
 package interfaces
 
+import "github.com/krau/favpics-helper/internal/structs"
+
 type Fav interface {
-	NewFavURLs() ([]string, error)
+	NewFavPics() ([]structs.Pic, error)
 }

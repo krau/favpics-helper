@@ -1,9 +1,13 @@
-<div align="center">
-
-# favpics-helper
-
+<h1 align="center">
+<a href="https://github.com/krau/favpics-helper">favpics-helper</a>
+</h1>
+<p align="center">
 Your picture collection helper. 你的图片收藏帮手。
-</div>
+</p>
+
+<pre align="center">
+Working in Progress...
+</pre>
 
 ---
 
@@ -14,14 +18,14 @@ Your picture collection helper. 你的图片收藏帮手。
 ## TODO
 
 - [ ] Multiple image sources
-  - [ ] Pixiv
+  - [x] Pixiv
   - [ ] Twitter
-  - [ ] Bilibili
   - [ ] Telegram Channel
+  - [ ] Telegram Bot(active)
   - [ ] ...
 - [ ] Multiple image storages
   - [ ] Local
-  - [ ] Telegram Channel
+  - [x] Telegram Channel
   - [ ] OneDrive
   - [ ] WebDAV
   - [ ] ...

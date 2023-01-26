@@ -21,6 +21,7 @@ type Config struct {
 		TelegramChannel struct {
 			Enabled  bool   `toml:"Enabled"`
 			UserName string `toml:"UserName"`
+			ChatID   int64  `toml:"ChatID"`
 		} `toml:"TelegramChannel"`
 	} `toml:"storages"`
 	Middlewares struct {

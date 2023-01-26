@@ -3,43 +3,66 @@ package tgbot
 import (
 	"time"
 
+	"github.com/krau/favpics-helper/internal/structs"
 	"github.com/krau/favpics-helper/pkg/util"
 
 	tgbotapi "github.com/go-telegram-bot-api/telegram-bot-api/v5"
 	"github.com/krau/favpics-helper/pkg/config"
 )
 
-type TelegramBot struct {
-	Bot *tgbotapi.BotAPI
-}
+var TgBot *tgbotapi.BotAPI = new(tgbotapi.BotAPI)
 
-func InitBot() (t *TelegramBot, err error) {
+func init() {
 	util.Log.Info("init bot")
+	if !config.Conf.Middlewares.TelegramBot.Enabled {
+		util.Log.Info("bot disabled")
+		return
+	}
 	bot, err := tgbotapi.NewBotAPI(config.Conf.Middlewares.TelegramBot.Token)
-	util.Log.Infof("Authorized on account %s", bot.Self.UserName)
+	util.Log.Infof("Login Tg Bot: [%s]", bot.Self.UserName)
 	if err != nil {
-		return nil, err
+		util.Log.Errorf("init bot error: %v", err)
 	}
-	t = &TelegramBot{
-		Bot: bot,
-	}
+	TgBot = bot
 	util.Log.Info("bot init success")
-	return t, nil
 }
 
-func (t *TelegramBot) SendPhotosToChan(tgbot *TelegramBot, UserName string, urls []string) error {
-	util.Log.Info("send photos to channel")
-	for _, url := range urls {
-		util.Log.Infof("sending: ", url)
-		pic := tgbotapi.FileURL(url)
-		msg := tgbotapi.NewPhotoToChannel(UserName, pic)
-		_, err := tgbot.Bot.Send(msg)
-		if err != nil {
-			return err
+func SendPicsToChan(UserName string, pics []structs.Pic) error {
+	util.Log.Info("send photos to tg channel")
+	for _, pic := range pics {
+		util.Log.Info("sending: ", pic.Title)
+		mediaGroup := make([]interface{}, 0)
+		if len(pic.Srcs) > 1 {
+			firstPic := tgbotapi.NewInputMediaPhoto(tgbotapi.FileURL(pic.Srcs[0]))
+			firstPic.Caption = pic.Link
+			mediaGroup = append(mediaGroup, firstPic)
+			for _, src := range pic.Srcs[1:] {
+				fileURL := tgbotapi.FileURL(src)
+				tgPic := tgbotapi.NewInputMediaPhoto(fileURL)
+				tgPic.Caption = pic.Link
+				mediaGroup = append(mediaGroup, tgPic)
+			}
+			mediaConfig := tgbotapi.NewMediaGroup(0, mediaGroup)
+			mediaConfig.ChannelUsername = UserName
+			_, err := TgBot.SendMediaGroup(mediaConfig)
+			if err != nil {
+				util.Log.Errorf("send photo error: %v", err)
+				return err
+			}
+			util.Log.Info("success,sleep 3 sec")
+			time.Sleep(3 * time.Second)
+		} else {
+			tgPic := tgbotapi.FileURL(pic.Srcs[0])
+			msg := tgbotapi.NewPhotoToChannel(UserName, tgPic)
+			markup := tgbotapi.NewInlineKeyboardMarkup(tgbotapi.NewInlineKeyboardRow(tgbotapi.NewInlineKeyboardButtonURL(pic.Title, pic.Link)))
+			msg.ReplyMarkup = markup
+			_, err := TgBot.Send(msg)
+			if err != nil {
+				util.Log.Errorf("send photo error: %v", err)
+				return err
+			}
+			util.Log.Infof("send photos to channel done")
 		}
-		util.Log.Infof("success,sleep 1 sec")
-		time.Sleep(1 * time.Second)
 	}
-	util.Log.Infof("send photos to channel success")
 	return nil
 }

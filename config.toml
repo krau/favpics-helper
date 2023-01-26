@@ -1,19 +1,26 @@
 [proxy]
+# 代理设置，对 Telegram Bot API 无效
+# 如需配置 Telegram 代理，请设置环境变量 HTTP_PROXY
+# 参考 https://github.com/go-telegram-bot-api/telegram-bot-api/issues/288
 Enabled=false
 Addr=""
 
 [sources]
 [sources.Pixiv]
+# Pixiv 源
 Enabled=false
 RssURL=""
 RefreshTime=120
 
 [storages]
 [storages.TelegramChannel]
+# Telegram 频道存储
 Enabled=false
-UserName=""
+UserName="" #记得带上@
+ChatID=0
 
 [middlewares]
 [middlewares.TelegramBot]
+# Telegram 机器人中间件
 Enabled=false
 Token=""
