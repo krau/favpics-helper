@@ -15,6 +15,7 @@ type Config struct {
 			Enabled     bool   `toml:"Enabled"`
 			RssURL      string `toml:"RssURL"`
 			RefreshTime int    `toml:"RefreshTime"`
+			Interval    int    `toml:"Interval"`
 		} `toml:"Pixiv"`
 	} `toml:"sources"`
 	Storages struct {
