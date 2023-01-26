@@ -1,9 +1,9 @@
 package db
 
 import (
+	"github.com/glebarez/sqlite"
 	"github.com/krau/favpics-helper/internal/models"
 	"github.com/krau/favpics-helper/pkg/util"
-	"gorm.io/driver/sqlite"
 	"gorm.io/gorm"
 )
 
