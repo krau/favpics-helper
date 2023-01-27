@@ -20,13 +20,13 @@ _build() {
     if [ "$os" = "windows" ]; then
         mv $out release/favpics-helper.exe
         cp config.toml release/
-        zip -j -q "${out}.zip" release/favpics-helper.exe
+        zip -j -q "${out}.zip" release/favpics-helper.exe release/config.toml
         rm -f "release/favpics-helper.exe"
         rm -f "release/config.toml"
     else
         mv $out release/favpics-helper
         cp config.toml release/
-        tar -zcvf "${out}.tar.gz" -C release favpics-helper
+        tar -zcvf "${out}.tar.gz" -C release favpics-helper config.toml
         rm -f "release/favpics-helper"
         rm -f "release/config.toml"
     fi
