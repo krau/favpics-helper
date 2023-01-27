@@ -23,7 +23,7 @@ jobs:
     needs: changelog
     strategy:
       matrix:
-        platform: [ubuntu-latest]
+        platform: [ubuntu-22.04]
         go-version: [1.19.4]
     name: Release
     runs-on: ${{ matrix.platform }}
