@@ -36,8 +36,8 @@ func pixivCycleTask() {
 			util.Log.Infof("done,sleep %d minutes", config.Conf.Sources.Pixiv.RefreshTime)
 			time.Sleep(time.Duration(config.Conf.Sources.Pixiv.RefreshTime) * time.Minute)
 		} else {
-			util.Log.Info("no new fav pics,sleep 5 minute")
-			time.Sleep(5 * time.Minute)
+			util.Log.Info("no new fav pics,sleep %d minute", config.Conf.Sources.Pixiv.Interval)
+			time.Sleep(time.Duration(config.Conf.Sources.Pixiv.Interval) * time.Minute)
 		}
 	}
 }
