@@ -15,6 +15,12 @@ Working in Progress...
 
 - Automatically download pictures from the source, and process them and save them to the specified location.
 
+## Usage
+
+1. Download the latest release from [Releases](github.com/krau/favpics-helper/releases) page.
+2. edit `config.toml` to your needs.
+3. run `favpics-helper.exe` or `favpics-helper` in your terminal.
+
 ## TODO
 
 - [ ] Multiple image sources
