@@ -4,7 +4,7 @@ import (
 	"time"
 
 	"github.com/krau/favpics-helper/internal/middlewares/tgbot"
-	"github.com/krau/favpics-helper/internal/sources/pixiv"
+	"github.com/krau/favpics-helper/internal/sources"
 	"github.com/krau/favpics-helper/pkg/config"
 	"github.com/krau/favpics-helper/pkg/util"
 )
@@ -19,10 +19,11 @@ func CycleTask() {
 }
 
 func pixivToTgChanTask() {
+	pixiv := sources.Pixiv{}
 	util.Log.Info("start pixiv to tg chan task")
 	for {
 		util.Log.Debug("start getting new fav pics")
-		pics, err := pixiv.Pixiv{}.NewFavPics()
+		pics, err := pixiv.NewFavPics()
 		if err != nil {
 			util.Log.Error("get new fav pics error:", err)
 		}
