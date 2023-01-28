@@ -1,4 +1,4 @@
-package pixiv
+package sources
 
 import (
 	"regexp"
@@ -6,16 +6,13 @@ import (
 
 	"github.com/PuerkitoBio/goquery"
 	"github.com/krau/favpics-helper/internal/db"
-	"github.com/krau/favpics-helper/internal/interfaces"
 	"github.com/krau/favpics-helper/internal/models"
 	"github.com/krau/favpics-helper/pkg/client"
 	"github.com/krau/favpics-helper/pkg/config"
 	"github.com/krau/favpics-helper/pkg/util"
 )
 
-type Pixiv struct {
-	interfaces.Fav
-}
+type Pixiv struct{}
 
 func (p Pixiv) NewFavPics() ([]models.Pic, error) {
 	util.Log.Debug("getting pixiv new fav urls")
