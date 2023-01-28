@@ -6,10 +6,6 @@ _build() {
     os="${arr[0]}"
     arch="${arr[1]}"
 
-    # Go build to build the binary.
-    export GOOS=$os
-    export GOARCH=$arch
-
     out="release/favpics-helper_${VERSION}_${os}_${arch}"
 
     GOOS=$os GOARCH=$arch go build -o "${out}" main.go
@@ -33,6 +29,7 @@ _build() {
 SUPPORTED_OSARCH="linux/amd64 linux/arm windows/amd64 linux/arm64"
 
 echo "Release builds for OS/Arch: ${SUPPORTED_OSARCH}"
+go mod download
 for each_osarch in ${SUPPORTED_OSARCH}; do
     echo "Building for ${each_osarch}"
     _build "${each_osarch}"
