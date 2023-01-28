@@ -14,29 +14,32 @@ func CycleTask() {
 
 	if config.Conf.Sources.Pixiv.Enabled {
 		util.Log.Debug("pixiv enabled")
-		pixivCycleTask()
+		pixivToTgChanTask()
 	}
 }
 
-func pixivCycleTask() {
-	util.Log.Info("start pixiv cycle task")
+func pixivToTgChanTask() {
+	util.Log.Info("start pixiv to tg chan task")
 	for {
 		util.Log.Debug("start getting new fav pics")
 		pics, err := pixiv.Pixiv{}.NewFavPics()
 		if err != nil {
 			util.Log.Error("get new fav pics error:", err)
 		}
-		util.Log.Info("get new fav pics done")
 		if len(pics) > 0 {
-			util.Log.Info("start sending new fav pics")
-			err = tgbot.SendPicsToChan(config.Conf.Storages.TelegramChannel.UserName, pics)
-			if err != nil {
-				util.Log.Error("send new fav pics error:", err)
+			util.Log.Debug("get new fav pics done")
+			for _, pic := range pics {
+				err = tgbot.SendPicsToChan(config.Conf.Storages.TelegramChannel.UserName, pic)
+				if err != nil {
+					util.Log.Error("send pic to tg chan error:", err)
+					continue
+				}
+				util.Log.Debug("send pic done:", pic.Link)
 			}
 			util.Log.Infof("done,sleep %d minutes", config.Conf.Sources.Pixiv.RefreshTime)
 			time.Sleep(time.Duration(config.Conf.Sources.Pixiv.RefreshTime) * time.Minute)
 		} else {
-			util.Log.Info("no new fav pics,sleep %d minute", config.Conf.Sources.Pixiv.Interval)
+			util.Log.Infof("no new fav pics,sleep %d minute", config.Conf.Sources.Pixiv.Interval)
 			time.Sleep(time.Duration(config.Conf.Sources.Pixiv.Interval) * time.Minute)
 		}
 	}
