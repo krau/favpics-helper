@@ -28,12 +28,13 @@ func init() {
 	util.Log.Info("bot init success")
 }
 
-func SendPicGroupToChan(UserName string, pic models.Pic) error {
-	util.Log.Debug("send pic group to tg channel")
+func SendPicsToChan(UserName string, pic models.Pic) error {
+	util.Log.Debug("send pic to tg channel", pic.Link)
 	if len(pic.Srcs) <= 1 {
+		util.Log.Debug("a single photo: ", pic.Title)
 		return SendPicToChan(UserName, pic)
 	} else {
-		util.Log.Debug("sending: ", pic.Title)
+		util.Log.Debug("a pic group: ", pic.Title)
 		mediaGroup := make([]interface{}, 0)
 		firstPic := tgbotapi.NewInputMediaPhoto(tgbotapi.FileURL(pic.Srcs[0]))
 		firstPic.Caption = pic.Link + "\n" + pic.Title + "\n" + pic.Description
@@ -72,19 +73,5 @@ func SendPicToChan(UserName string, pics models.Pic) error {
 	util.Log.Infof("%s sent,sleep 5 sec", pics.Title)
 	time.Sleep(5 * time.Second)
 	util.Log.Debug("send pic to channel done")
-	return nil
-}
-
-func SnedPicsToChan(UserName string, pics []models.Pic) error {
-	util.Log.Debug("send pics to tg channel")
-	for _, pic := range pics {
-		err := SendPicGroupToChan(UserName, pic)
-		if err != nil {
-			err = SendPicToChan(UserName, pic)
-			if err != nil {
-				return err
-			}
-		}
-	}
 	return nil
 }
