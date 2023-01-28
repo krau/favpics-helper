@@ -29,14 +29,14 @@ func pixivCycleTask() {
 		util.Log.Info("get new fav pics done")
 		if len(pics) > 0 {
 			util.Log.Info("start sending new fav pics")
-			err = tgbot.SendPicsToChan(config.Conf.Storages.TelegramChannel.UserName, pics)
+			err = tgbot.SnedPicsToChan(config.Conf.Storages.TelegramChannel.UserName, pics)
 			if err != nil {
 				util.Log.Error("send new fav pics error:", err)
 			}
 			util.Log.Infof("done,sleep %d minutes", config.Conf.Sources.Pixiv.RefreshTime)
 			time.Sleep(time.Duration(config.Conf.Sources.Pixiv.RefreshTime) * time.Minute)
 		} else {
-			util.Log.Info("no new fav pics,sleep %d minute", config.Conf.Sources.Pixiv.Interval)
+			util.Log.Infof("no new fav pics,sleep %d minute", config.Conf.Sources.Pixiv.Interval)
 			time.Sleep(time.Duration(config.Conf.Sources.Pixiv.Interval) * time.Minute)
 		}
 	}

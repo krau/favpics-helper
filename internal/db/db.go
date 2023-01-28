@@ -28,7 +28,7 @@ func SavePics(pics []models.Pic) {
 func IsPicExist(p models.Pic) bool {
 	// 查询图片是否存在
 	var count int64
-	util.Log.Debug("check pic exist:", p)
+	util.Log.Debug("check pic exist:", p.Link)
 	db.Model(&models.Pic{}).Where("source = ? AND Link = ?", p.Source, p.Link).Count(&count)
 	return count > 0
 }

@@ -18,7 +18,7 @@ type Pixiv struct {
 }
 
 func (p Pixiv) NewFavPics() ([]models.Pic, error) {
-	util.Log.Info("getting pixiv new fav urls")
+	util.Log.Debug("getting pixiv new fav urls")
 	client, err := client.Client()
 	if err != nil {
 		return nil, err
@@ -53,9 +53,9 @@ func (p Pixiv) NewFavPics() ([]models.Pic, error) {
 			util.Log.Debug("new pic struct:", pic)
 			pics = append(pics, pic)
 		} else {
-			util.Log.Debug("pic exist:", pic)
+			util.Log.Debug("pic exist:", pic.Link)
 		}
 	})
-	util.Log.Info("get pixiv new fav pics success")
+	util.Log.Debug("get pixiv new fav pics success")
 	return pics, nil
 }
