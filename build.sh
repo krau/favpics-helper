@@ -12,7 +12,7 @@ _build() {
 
     out="release/favpics-helper_${VERSION}_${os}_${arch}"
 
-    go build -a -o "${out}"
+    GOOS=$os GOARCH=$arch go build -o "${out}" main.go
 
     if [ "$os" = "windows" ]; then
         mv $out release/favpics-helper.exe

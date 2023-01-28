@@ -23,32 +23,25 @@ jobs:
     needs: changelog
     strategy:
       matrix:
-        platform: [ubuntu-22.04]
-        go-version: [1.19.4]
+        platform: [ubuntu-latest]
+        go-version: [1.19]
     name: Release
     runs-on: ${{ matrix.platform }}
     steps:
-      - name: Setup Go
-        uses: actions/setup-go@v3
-        with:
-          go-version: ${{ matrix.go-version }}
-
       - name: Checkout
         uses: actions/checkout@v3
-    
-
+      - name: Setup Go
+        uses: actions/setup-go@v3.5.0
+        with:
+          go-version: ${{ matrix.go-version }}
       - name: Get dependencies
         run: |
           sudo apt-get update
-          sudo apt-get -y install gcc-mingw-w64-x86-64
-          sudo apt-get -y install gcc-arm-linux-gnueabihf libc6-dev-armhf-cross
-          sudo apt-get -y install gcc-aarch64-linux-gnu libc6-dev-arm64-cross
+          sudo apt-get upgrade
           chmod +x ./build.sh
-
       - name: Build
         run: |
           bash build.sh
-
       - name: Release
         uses: softprops/action-gh-release@v1
         with:
