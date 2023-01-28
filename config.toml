@@ -10,8 +10,13 @@ Addr=""
 # Pixiv 源
 Enabled=false
 RssURL=""
-RefreshTime=60 # 抓取到新收藏后，间隔多少分钟抓取下一次
 Interval=20 # 无新收藏时，再间隔多少分钟抓取一次
+
+[sources.Twitter]
+# Twitter 源
+Enabled=false
+RssURL=""
+Interval=20
 
 [storages]
 [storages.TelegramChannel]

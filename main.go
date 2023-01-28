@@ -5,5 +5,5 @@ import (
 )
 
 func main() {
-	cmd.CycleTask()
+	cmd.Start()
 }
