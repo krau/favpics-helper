@@ -25,7 +25,7 @@ Working in Progress...
 
 - [ ] Multiple image sources
   - [x] Pixiv
-  - [ ] Twitter
+  - [x] Twitter
   - [ ] Telegram Channel
   - [ ] Telegram Bot(active)
   - [ ] ...
