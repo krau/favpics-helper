@@ -53,12 +53,12 @@ func SendPicsToChan(UserName string, pic models.Pic) error {
 		mediaConfig.ChannelUsername = UserName
 		_, err := TgBot.SendMediaGroup(mediaConfig)
 		if err != nil {
-			util.Log.Errorf("send media group [%s] error: %v", pic.Link, err)
+			util.Log.Noticef("send media group [%s] error: %v, try send single pic", pic.Link, err)
 			return sendPicToChan(UserName, pic)
 		}
 		db.AddPic(pic)
-		util.Log.Infof("%s sent,sleep 5 sec", pic.Title)
-		time.Sleep(5 * time.Second)
+		util.Log.Infof("%s sent,sleep 10 sec", pic.Title)
+		time.Sleep(10 * time.Second)
 	}
 	return nil
 }
@@ -71,12 +71,12 @@ func sendPicToChan(UserName string, pic models.Pic) error {
 	msg.ReplyMarkup = markup
 	_, err := TgBot.Send(msg)
 	if err != nil {
-		util.Log.Errorf("send photo error: %v", err)
+		util.Log.Noticef("send photo error: %v,try just send link", err)
 		return sendPicLinkToChan(UserName, pic)
 	}
 	db.AddPic(pic)
-	util.Log.Infof("%s sent,sleep 5 sec", pic.Title)
-	time.Sleep(5 * time.Second)
+	util.Log.Infof("%s sent,sleep 10 sec", pic.Title)
+	time.Sleep(10 * time.Second)
 	util.Log.Debug("send pic to channel done")
 	return nil
 }
@@ -93,8 +93,8 @@ func sendPicLinkToChan(UserName string, pic models.Pic) error {
 		return err
 	}
 	db.AddPic(pic)
-	util.Log.Infof("%s sent,sleep 5 sec", pic.Title)
-	time.Sleep(5 * time.Second)
+	util.Log.Infof("%s sent,sleep 10 sec", pic.Title)
+	time.Sleep(10 * time.Second)
 	util.Log.Debug("send pic link to channel done")
 	return nil
 }

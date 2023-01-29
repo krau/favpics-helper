@@ -14,7 +14,7 @@ func Start() {
 	pixivTricker := time.NewTicker(time.Duration(config.Conf.Sources.Pixiv.Interval) * time.Minute)
 	twitterTricker := time.NewTicker(time.Duration(config.Conf.Sources.Twitter.Interval) * time.Minute)
 	go twitterToTgChanTask()
-	time.Sleep(time.Second * 5)
+	time.Sleep(time.Second * 30)
 	go pixivToTgChanTask()
 	for {
 		select {
