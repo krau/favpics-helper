@@ -1,6 +1,7 @@
 package sources
 
 import (
+	"net/url"
 	"strings"
 
 	"github.com/PuerkitoBio/goquery"
@@ -33,6 +34,7 @@ func (t Twitter) NewFavPics() ([]models.Pic, error) {
 		src, isExist := s.Find("img").Attr("src")
 		if isExist {
 			srcs := make([]string, 0)
+			src = url.QueryEscape(src)
 			srcs = append(srcs, src)
 			//title := regexp.MustCompile(`CDATA\[(.*)\]\]>`).FindStringSubmatch(s.Find("title").Text())
 			title := s.Find("guid").Text()

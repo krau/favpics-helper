@@ -18,9 +18,6 @@ func newlog(LogChannelName string) *slog.Logger {
 
 	fullHandler := handler.MustRotateFile("./logs/full.log", rotatefile.EveryDay,
 		handler.WithLogLevels(slog.AllLevels), handler.WithCompress(true))
-	//consoleHandler := handler.NewConsoleHandler(slog.Levels{slog.InfoLevel, slog.NoticeLevel, slog.ErrorLevel, slog.FatalLevel, slog.WarnLevel})
-	// 注册 handler 到 logger(调度器)
-	//slog.DefaultChannelName = LogChannelName
 	slog.PushHandlers(errorHandler, normalHandler, fullHandler)
 	slog.SetLogLevel(slog.InfoLevel)
 	slog.DefaultChannelName = LogChannelName
