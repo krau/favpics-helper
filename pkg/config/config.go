@@ -12,11 +12,15 @@ type Config struct {
 	} `toml:"proxy"`
 	Sources struct {
 		Pixiv struct {
-			Enabled     bool   `toml:"Enabled"`
-			RssURL      string `toml:"RssURL"`
-			RefreshTime int    `toml:"RefreshTime"`
-			Interval    int    `toml:"Interval"`
+			Enabled  bool   `toml:"Enabled"`
+			RssURL   string `toml:"RssURL"`
+			Interval int    `toml:"Interval"`
 		} `toml:"Pixiv"`
+		Twitter struct {
+			Enabled  bool   `toml:"Enabled"`
+			RssURL   string `toml:"RssURL"`
+			Interval int    `toml:"Interval"`
+		} `toml:"Twitter"`
 	} `toml:"sources"`
 	Storages struct {
 		TelegramChannel struct {
