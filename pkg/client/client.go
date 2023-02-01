@@ -10,10 +10,10 @@ import (
 
 func Client() (http.Client, error) {
 	util.Log.Debug("get http client")
-	if !config.Conf.Proxy.Enabled {
+	if !config.Conf.System.Proxy.Enabled {
 		return http.Client{}, nil
 	}
-	proxyURL, err := url.Parse(config.Conf.Proxy.Addr)
+	proxyURL, err := url.Parse(config.Conf.System.Proxy.Addr)
 	if err != nil {
 		return http.Client{}, err
 	}
