@@ -1,7 +1,7 @@
 package sources
 
 import (
-	"net/url"
+	"regexp"
 	"strings"
 
 	"github.com/PuerkitoBio/goquery"
@@ -32,12 +32,13 @@ func (t Twitter) NewFavPics() ([]models.Pic, error) {
 	pics := make([]models.Pic, 0)
 	doc.Find("item").Each(func(i int, s *goquery.Selection) {
 		src, isExist := s.Find("img").Attr("src")
+		srcs := make([]string, 0)
 		if isExist {
-			srcs := make([]string, 0)
-			src = url.QueryEscape(src)
+			src = strings.Replace(src, "&name=orig", "", -1)
+			println(src)
 			srcs = append(srcs, src)
-			//title := regexp.MustCompile(`CDATA\[(.*)\]\]>`).FindStringSubmatch(s.Find("title").Text())
-			title := s.Find("guid").Text()
+			re := regexp.MustCompile(`<!\[CDATA\[(.*?)(?: http.*?)?\]\]>`)
+			title := re.FindStringSubmatch(s.Find("title").Text())[1]
 			description := strings.Split(s.Find("description").Text(), "]]>")[0]
 			link := s.Find("guid").Text()
 			pic := models.Pic{

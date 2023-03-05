@@ -65,8 +65,7 @@ func SendPicsToChan(UserName string, pic models.Pic) error {
 
 func sendPicToChan(UserName string, pic models.Pic) error {
 	util.Log.Debug("send photo to tg channel")
-	tgPic := tgbotapi.FileURL(pic.Srcs[0])
-	msg := tgbotapi.NewPhotoToChannel(UserName, tgPic)
+	msg := tgbotapi.NewPhotoToChannel(UserName, tgbotapi.FileURL(pic.Srcs[0]))
 	markup := tgbotapi.NewInlineKeyboardMarkup(tgbotapi.NewInlineKeyboardRow(tgbotapi.NewInlineKeyboardButtonURL(pic.Title, pic.Link)))
 	msg.ReplyMarkup = markup
 	_, err := TgBot.Send(msg)
