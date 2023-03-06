@@ -35,7 +35,6 @@ func (t Twitter) NewFavPics() ([]models.Pic, error) {
 		srcs := make([]string, 0)
 		if isExist {
 			src = strings.Replace(src, "&name=orig", "", -1)
-			println(src)
 			srcs = append(srcs, src)
 			re := regexp.MustCompile(`<!\[CDATA\[(.*?)(?: http.*?)?\]\]>`)
 			title := re.FindStringSubmatch(s.Find("title").Text())[1]

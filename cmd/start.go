@@ -11,17 +11,14 @@ import (
 
 func Start() {
 	util.Log.Notice("start favpics-helper")
-	pixivTricker := time.NewTicker(time.Duration(config.Conf.Sources.Pixiv.Interval) * time.Minute)
-	twitterTricker := time.NewTicker(time.Duration(config.Conf.Sources.Twitter.Interval) * time.Minute)
 	go twitterToTgChanTask()
-	time.Sleep(time.Second * 30)
 	go pixivToTgChanTask()
 	for {
 		select {
-		case <-pixivTricker.C:
-			go pixivToTgChanTask()
-		case <-twitterTricker.C:
-			go twitterToTgChanTask()
+		case <-time.After(time.Duration(config.Conf.Sources.Pixiv.Interval) * time.Minute):
+			pixivToTgChanTask()
+		case <-time.After(time.Duration(config.Conf.Sources.Twitter.Interval) * time.Minute):
+			twitterToTgChanTask()
 		}
 	}
 }
